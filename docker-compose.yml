@@ -29,7 +29,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - mynet
+      - docker network create mynet
     restart: always
 
 networks:
