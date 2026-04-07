@@ -34,17 +34,17 @@ The main goals of this project are:
 
 ### 1) Docker Network Inspect
 
-![](./images/4.png)
+![](./images/network%20inspect.png)
 
 
 ### 2) Docker Inspect Backend API
 
-![](./images/5.png)
+![](./images/ip%20address%20expose.png)
 
 
 ### 3) Docker Volume Inspection
 
-![](./images/6.png)
+![](./images/vol%20persistence.png)
 
 ### 4) Testing API Verification
 
