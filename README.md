@@ -6,15 +6,40 @@ A containerized backend application built with **Node.js + Express** and **Postg
 
 ## Project Overview
 
-This project demonstrates how to build and run a multi-container web application using Docker.
+This project demonstrates how to build and deploy a multi-container web application using Docker within a virtualized environment.
+
+## Tech Stack
+
+* Backend API: Python (Flask)
+* Database: PostgreSQL
+* Containerization: Docker
+* Orchestration: Docker Compose
+* Virtualization: Multipass
+* Networking: Docker IPvlan
+
+## Architecture
 
 The application consists of:
 
-- a **backend API** developed using **Node.js and Express**
-- a **PostgreSQL database** running in a separate container
-- a **Docker Compose configuration** to manage both services together
+* a backend API developed using Python (Flask)
+* a PostgreSQL database running in a separate container
+* a Docker Compose configuration to manage and orchestrate both services
 
-The backend handles HTTP requests and interacts with the PostgreSQL database to store and retrieve user data.
+To simulate a real-world deployment environment, a virtual machine was created using Multipass. The project files were transferred from the host system to the VM, where all Docker operations were performed.
+
+The backend and database services are connected using a custom Docker IPvlan network, allowing each container to have its own IP address within a defined subnet. This setup enables direct communication between containers, similar to how services interact in a real network environment.
+
+Docker Compose is used to build and run the containers inside the VM, ensuring proper service orchestration. Additionally, Docker volumes are configured to provide persistent storage for the PostgreSQL database, ensuring that data is retained even after containers are stopped or restarted.
+
+## Key Concepts Demonstrated
+
+* Containerization using Docker
+* Service orchestration with Docker Compose
+* Virtual machine setup using Multipass
+* Custom Docker networking with IPvlan
+* Data persistence using Docker volumes
+
+This project serves as a practical example of modern backend infrastructure deployment.
 
 ---
 
@@ -46,9 +71,9 @@ The main goals of this project are:
 
 ![](./images/vol%20persistence.png)
 
-### 4) Testing API Verification
 
-![](./images/3.png)
+
+
 
 
 
