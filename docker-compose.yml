@@ -1,40 +1,49 @@
+version: "3.9"
+
 services:
-  database:
-    build: ./database
+  db:
+    build:
+      context: ./database
     container_name: postgres_db
     environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: mydb
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - mynet
+      my_ipvlan:
+        ipv4_address: 192.168.2.100
     restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"]
-      interval: 10s
-      retries: 5
 
   backend:
-    build: ./backend
-    container_name: backend_api
-    depends_on:
-      - database
+    build:
+      context: ./backend
+    container_name: fastapi_backend
     environment:
-      DB_HOST: database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: mydb
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secret
-    ports:
-      - "3000:3000"
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
     networks:
-      - docker network create mynet
+      my_ipvlan:
+        ipv4_address: 192.168.2.101
     restart: always
 
 networks:
-  mynet:
-    driver: bridge
+  my_ipvlan:
+    driver: ipvlan
+    driver_opts:
+      parent: enp0s1
+      ipvlan_mode: l2
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1
+          ip_range: 192.168.2.96/29
 
 volumes:
   pgdata:
